@@ -1,55 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Bootstrap Example</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-		<a class="navbar-brand" href="/blog">Blog</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a>
-				</li>
-				<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-	<br>
-	<div class="container">
-		<div class="card m-2">
-			<img class="card-img-top" src="img_avatar1.png" alt="Card image">
-			<div class="card-body">
-				<h4 class="card-title">제목</h4>
-				<p class="card-text">내용</p>
-				<a href="#" class="btn btn-primary">상세보기</a>
-			</div>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ include file="layout/header.jsp"%>
+
+<div class="container">
+
+<c:forEach var="board" items="${boards.content}">
+	<div class="card m-2">
+		<div class="card-body">
+			<h4 class="card-title">${board.title}</h4>
+			<a href="/board/${board.id}" class="btn btn-primary">상세보기</a>
 		</div>
 	</div>
+</c:forEach>
 
-	<div class="jumbotron text-center" style="margin-bottom: 0">
-		<p>Created by 18101245</p>
-		<p>010-9194-0898</p>
-		<p>서울과학기술대학교 웹서버프로그래밍 프로젝트</p>
-	</div>
+<ul class="pagination justify-content-center">
+  <c:choose>
+  	<c:when test="${boards.first}">
+  		<li class="page-item disabled"><a class="page-link" href="?page=${boards.number-1}">Previous</a></li>
+  	</c:when>
+  	<c:otherwise>
+  		<li class="page-item"><a class="page-link" href="?page=${boards.number-1}">Previous</a></li>
+  	</c:otherwise>
+  </c:choose>
+  
+    <c:choose>
+  	<c:when test="${boards.last}">
+  		<li class="page-item disabled"><a class="page-link" href="?page=${boards.number+1}">Next</a></li>
+  	</c:when>
+  	<c:otherwise>
+  		<li class="page-item"><a class="page-link" href="?page=${boards.number+1}">Next</a></li>
+  	</c:otherwise>
+  </c:choose>
+  
+</ul>
+	
 
-</body>
-</html>
+</div>
 
-
+<%@ include file="layout/footer.jsp"%>
